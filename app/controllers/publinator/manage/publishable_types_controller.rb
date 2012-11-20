@@ -31,7 +31,7 @@ module Publinator
     end
 
     def create
-      @manage_publishable_type = Manage::PublishableType.new(params[:manage_publishable_type])
+      @manage_publishable_type = Manage::PublishableType.new(params[:publishable_type])
       respond_to do |format|
         if @manage_publishable_type.save
           format.html { redirect_to manage_publishable_types_path, notice: 'Publishable type was successfully created.' }
@@ -46,7 +46,7 @@ module Publinator
     def update
       @manage_publishable_type = Publinator::PublishableType.find(params[:id])
       respond_to do |format|
-        if @manage_publishable_type.update_attributes(params[:manage_publishable_type])
+        if @manage_publishable_type.update_attributes(params[:publishable_type])
           format.html { redirect_to manage_publishable_types_path, notice: 'Publishable type was successfully updated.' }
           format.json { head :no_content }
         else
