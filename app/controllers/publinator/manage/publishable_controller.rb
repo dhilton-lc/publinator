@@ -72,7 +72,7 @@ module Publinator
     end
 
     def update
-      if @publishable_class.send(:update, @publishable.id, params[@publishable_class_name.downcase.to_sym])
+      if @publishable_class.send(:update, @publishable.id, params[@publishable_member_name.to_sym])
         redirect_to "/manage/#{@publishable_collection_name}", :notice => "#{@publishable_type.name} updated."
       else
         begin
