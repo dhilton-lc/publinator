@@ -57,7 +57,7 @@ module Publinator
         li_content = ""
         li_content += link_to object.title, object.path
         if object.menu_collection && object.menu_collection.length > 0
-          li_content += ("<br>" + submenu(object).html_safe)
+          li_content += (submenu(object).html_safe)
         end
         li_content.html_safe
       end
