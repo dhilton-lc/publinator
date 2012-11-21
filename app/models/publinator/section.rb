@@ -3,12 +3,14 @@
 # TODO Validate: children have to have the same site_id as parents
 module Publinator
   class Section < ActiveRecord::Base
-    attr_accessible :layout, :name, :parent_id, :site, :section_slug
+    attr_accessible :layout, :name, :parent_id, :site, :section_slug, :position
 
     has_many :publications, :class_name => "Publinator::Publication", :order => "position"
     before_create :generate_section_slug
     alias_attribute :title, :name
     alias_attribute :slug, :section_slug
+
+    default_scope order("position")
 
     def self.matches?(request)
       pt = self.find(:first, :conditions => ["section_slug = ?", request.path_parameters[:section]])
