@@ -55,7 +55,7 @@ module Publinator
     def li_tag(object)
       content_tag(:li, :id => object.my_slug) do
         li_content = ""
-        li_content += link_to object.title, object.path
+        li_content += link_to raw(object.title), object.path
         if object.menu_collection && object.menu_collection.length > 0
           li_content += (submenu(object).html_safe)
         end
