@@ -92,6 +92,13 @@ module Publinator
       render :nothing => true
     end
 
+    def destroy
+      @publishable.destroy
+      respond_to do |format|
+        format.html { redirect_to "/manage/#{@publishable_collection_name}", :notice => "#{@publishable_type.name} deleted." }
+        format.json { head :no_content }
+      end
+    end
 
     private
 

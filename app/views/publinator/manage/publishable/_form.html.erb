@@ -51,8 +51,12 @@
   </div>
   <%= form.actions do %>
     <%= form.action :submit, :as => :button %>
-    <%= form.action :cancel, :as => :link %>
+    <%= form.action :cancel, :as => :link, :label => "Cancel", :button_html => { :style => "display: inline-block; padding-right: 2em;" } %>
+    <li class="action link_action" style="display: inline-block; padding-right: 2em;">
+      <%= link_to "Delete #{@publishable_member_name}", send("manage_#{@publishable_member_name}_path", @publishable), :method => :delete, :class => "danger", :confirm => "Delete this #{@publishable_member_name}?" %>
+    </li>
   <% end %>
+  <%= %>
 <% end %>
 
 <% if @publishable.menu_collection %>

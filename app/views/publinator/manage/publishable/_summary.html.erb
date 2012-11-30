@@ -1,7 +1,8 @@
 <li class="ui-state-default" id="page_<%= summary.id %>">
   <div class="controls">
-    <%= link_to "edit", send("edit_manage_#{@publishable_member_name}_path", summary), :class => "ui-icon ui-icon-pencil" %>
-    <%= link_to "public", summary.path, :class => "ui-icon ui-icon-newwin", :target => "_new" %>
+    <%= link_to "edit", send("edit_manage_#{@publishable_member_name}_path", summary), :class => "ui-icon ui-icon-pencil", :title => "edit" %>
+    <%= link_to "show", send("manage_#{@publishable_member_name}_path", summary), :class => "ui-icon ui-icon-document-b", :title => "show" %>
+    <%= link_to "public", summary.path, :class => "ui-icon ui-icon-newwin", :target => "_new", :title => "view in site" %>
   </div>
   <%= link_to summary.title, send("edit_manage_#{@publishable_member_name}_path", summary) %><br>
   <div class="details">
