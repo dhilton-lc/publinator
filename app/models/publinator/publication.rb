@@ -4,7 +4,7 @@ module Publinator
     attr_accessible :custom_slug, :parent_id, :publication_state_id,
       :publishable_id, :publishable_type, :slug, :publish_at, :hide_in_submenu,
       :unpublish_at, :archive_at, :section, :default, :publishable, :site,
-      :section_id, :collection_publishable_type_id, :collection_scope
+      :section_id, :collection_publishable_type_id, :collection_scope, :render_collection
     belongs_to :publishable, :polymorphic => true
     belongs_to :section, :class_name => "Publinator::Section"
     belongs_to :site

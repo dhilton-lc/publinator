@@ -51,6 +51,7 @@ Publinator::Engine.routes.draw do
       end
     end
     resources :publishable_types
+    resources :asset_items
   end
 
   #constraints(Publinator::PublishableType) do

@@ -1,12 +1,12 @@
 <%= m(@publishable.body) %>
-<!--
-<% if @publishable.respond_to?(:publishables) && @publishable.publishables.length > 0 && !@publishable.publishables.first.class.nil? %>
+
+<% if @publishable.respond_to?(:publishables) && @publishable.publishables.length > 0 && !@publishable.publishables.first.class.nil? && @publication.render_collection? %>
 <ol id="documents">
   <%= render :collection => @publishable.publishables, :partial => "/object_blocks/#{@publishable.publishables.first.class.to_s.demodulize.underscore}" %>
 </ol>
 <% end %>
--->
-<% if @publication.collection_publishable_type_id && @publication.collection %>
+
+<% if @publication.collection_publishable_type_id && @publication.collection && @publication.render_collection? %>
 <div class="<%= @publication.collection.first.class.to_s.pluralize.underscore %>">
   <%= render :collection => @publication.collection, :partial => "/object_blocks/#{@publication.collection.first.class.to_s.underscore}" %>
 </div>

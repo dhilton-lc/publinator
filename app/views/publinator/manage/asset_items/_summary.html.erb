@@ -1,0 +1,10 @@
+<li class="ui-state-default" id="asset_item_<%= summary.id %>">
+  <div class="controls">
+    <!--<%= link_to "edit", edit_manage_asset_item_path(summary), :class => "ui-icon ui-icon-pencil" %>-->
+    <%= link_to "delete", manage_asset_item_path(summary), :method => "delete", :class => "ui-icon ui-icon-trash", :data => { :confirm => "Are you sure?" } %>
+  </div>
+  <%= link_to "#{summary.title? ? summary.title : 'Untitled'} (#{summary.asset_file_name})", edit_manage_asset_item_path(summary) %><br>
+  <div class="details">
+    <%= truncate(summary.asset.url, :length => 80) %>
+  </div>
+</li>

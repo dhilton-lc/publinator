@@ -2,7 +2,8 @@
 
 <ul>
   <li><%= link_to "Sections", "/manage/sections" %></li>
- <li><%= link_to "Pages", manage_pages_path %></li>
+  <li><%= link_to "Pages", manage_pages_path %></li>
+  <li><%= link_to "Assets", manage_asset_items_path %></li>
 <% @publishable_types.each do |pt| %>
    <li><%= link_to pt.name.singularize.tableize.titleize, send("manage_#{pt.name.tableize}_path") %></li>
 <% end %>
