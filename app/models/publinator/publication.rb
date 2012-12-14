@@ -18,6 +18,7 @@ module Publinator
 
     scope :published, where(:publication_state_id => 1)
     scope :for_site, lambda { |site_id| where("site_id = ?", site_id) }
+    scope :orphans, where(:section_id => nil)
 
     delegate :title, :path, :menu_collection, :to => :publishable
 

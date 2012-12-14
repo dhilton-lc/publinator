@@ -22,8 +22,9 @@ module Publinator
       end
     end
 
+    # Only used for pages without sections
     def page
-      @publication = Publinator::Publication.find_by_publishable_type_and_slug('Publinator::Page', params[:slug])
+      @publication = Publinator::Publication.orphans.find_by_publishable_type_and_slug('Publinator::Page', params[:slug])
       if @publication
         @publishable = @publication.publishable
         render "publinator/publishable/show"
