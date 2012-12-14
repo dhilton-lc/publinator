@@ -81,9 +81,9 @@ Publinator::Engine.routes.draw do
       }, :as => "publishable"
   end
 
-  #match "/:slug", :controller => :home, :action => :page, :requirements => {
-  #  :slug => /\A([a-zA-Z]+[a-zA-Z\-_]*)\z/i
-  #}, :as => 'publishable'
+  match "/:slug", :controller => :publishable, :action => :page, :requirements => {
+    :slug => /\A([a-zA-Z]+[a-zA-Z\-_]*)\z/i
+  }, :as => 'publishable'
 
   root :to  => "home#index"
   match '/' => 'home#index'

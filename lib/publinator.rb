@@ -72,6 +72,8 @@ module Publinator
       raise "publication not found" if !self.publication
       if self.publication.section
         "#{self.publication.section.path}/#{self.publication.slug}"
+      elsif self.publication.publishable_type == "Publinator::Page"
+        "/#{self.publication.slug}"
       else
         "/#{self.class.to_s.tableize}/#{self.publication.slug}"
       end

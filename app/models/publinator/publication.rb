@@ -52,7 +52,8 @@ module Publinator
     end
 
     def self.get_by_slug(slug)
-      self.published.where(:slug => slug)
+      #self.published.where(:slug => slug)
+      self.where(:slug => slug)
     end
   end
 end

@@ -22,6 +22,16 @@ module Publinator
       end
     end
 
+    def page
+      @publication = Publinator::Publication.find_by_publishable_type_and_slug('Publinator::Page', params[:slug])
+      if @publication
+        @publishable = @publication.publishable
+        render "publinator/publishable/show"
+      else
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
+
     def show
       @publication = Publinator::Publication.find_by_publishable_type_and_slug(params[:publishable_type].classify, params[:id])
       @publishable = @publication.publishable
