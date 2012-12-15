@@ -2,6 +2,7 @@
   <div class="controls">
     <%= link_to "edit", edit_manage_page_path(summary), :class => "ui-icon ui-icon-pencil" %>
     <%= link_to "public", summary.path, :class => "ui-icon ui-icon-newwin" %>
+    <%= link_to "delete", manage_page_path(summary), :method => :delete, :class => "danger ui-icon ui-icon-trash", :confirm => "Delete this page?" %>
   </div>
   <%= link_to summary.title, edit_manage_page_path(summary) %><br>
   <div class="details">

@@ -96,6 +96,14 @@ module Publinator
       end
     end
 
+    def destroy
+      @page.destroy
+      respond_to do |format|
+        format.html { redirect_to "/manage/pages", :notice => "Page deleted." }
+        format.json { head :no_content }
+      end
+    end
+
     private
 
       def get_pages
