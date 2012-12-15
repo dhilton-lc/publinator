@@ -6,6 +6,9 @@ module Publinator
 
     def index
       @publication = Publinator::Publication.find_by_section_id_and_slug(@section.id, 'index')
+      unless @publication
+        @publication = Publinator::Publication.find(:first, :conditions => ["section_id = ?", @section.id])
+      end
       @publishable = @publication.publishable
       if @publication.publishable_type
         @publishable_type = Publinator::PublishableType.find_by_name(@publication.publishable_type.classify)
