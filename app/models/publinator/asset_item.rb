@@ -4,7 +4,7 @@
     belongs_to :assetable, :polymorphic => true
     validates_presence_of :assetable
 
-    has_attached_file :asset
+    has_attached_file :asset, :preserve_files => true
     default_scope order('updated_at desc')
 
   end
