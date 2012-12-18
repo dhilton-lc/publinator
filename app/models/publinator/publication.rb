@@ -18,6 +18,8 @@ module Publinator
     before_save       :generate_slug
 
     scope :published, where(:publication_state_id => 1)
+    scope :archived, where( :archived => true )
+    scope :active, where( :archived => false )
     scope :for_site, lambda { |site_id| where("site_id = ?", site_id) }
     scope :orphans, where(:section_id => nil)
     default_scope order('position')
