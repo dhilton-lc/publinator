@@ -10,6 +10,7 @@
       <li><a href="#tabs-1">Page</a></li>
       <li><a href="#tabs-2">Assets</a></li>
       <li><a href="#tabs-3">Publication</a></li>
+      <li><a href="#tabs-4">SEO Settings</a></li>
     </ul>
     <div id="tabs-1">
       <%= form.inputs "Page" do %>
@@ -44,10 +45,8 @@
 
     <div id="tabs-3">
       <%= form.semantic_fields_for :publication do |pub| %>
-        <%= pub.inputs "Publication Settings" do %>
-          <%= pub.input :section, :as => :select, :required => false, :collection => current_site.sections unless current_site.sections.length == 0 %>
-        <% end %>
         <%= pub.inputs "Advanced Publication Settings" do %>
+          <%= pub.input :section, :as => :select, :required => false, :collection => current_site.sections unless current_site.sections.length == 0 %>
           <%= pub.input :custom_slug, :required => false %>
           <%= pub.input :collection_publishable_type_id, :as => :select, :collection => Publinator::PublishableType.all, :required => false %>
           <%= pub.input :collection_scope, :required => false %>
@@ -57,6 +56,15 @@
           <%= pub.input :archive_at, :as => :datetime_select, :required => false %>
           <%= pub.input :hide_in_submenu, :as => :boolean, :required => false %>
           <%= pub.input :archived, :as => :boolean, :required => false %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div id="tabs-4">
+      <%= form.semantic_fields_for :publication do |pub| %>
+        <%= pub.inputs "SEO Settings" do %>
+          <%= pub.input :title_tag, :label => "HTML Title Tag", :required => false %>
+          <%= pub.input :meta_description, :required => false %>
         <% end %>
       <% end %>
     </div>
