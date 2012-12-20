@@ -5,7 +5,7 @@ module Publinator
       :publishable_id, :publishable_type, :slug, :publish_at, :hide_in_submenu,
       :unpublish_at, :archive_at, :section, :default, :publishable, :site,
       :section_id, :collection_publishable_type_id, :collection_scope, :render_collection,
-      :title_tag, :meta_description,
+      :title_tag, :meta_description, :position,
       :archived # FIXME: Temporary fix in anticipation of more complete workflow management
     belongs_to :publishable, :polymorphic => true
     belongs_to :section, :class_name => "Publinator::Section"
@@ -39,7 +39,7 @@ module Publinator
     end
 
     def generate_slug
-      if self.slug.blank? || slug =~ /temporary_slug\d?/
+      if self.slug.blank? || slug =~ /temporary_slug_\d?/ || custom_slug.present? || default
         if default
           self.slug = 'index'
         elsif custom_slug.present?

@@ -39,6 +39,7 @@
     <div id="tabs-3">
       <%= form.semantic_fields_for :publication, @publishable.publication do |pub| %>
         <%= pub.inputs "Advanced Publication Settings", :class => "advanced_settings" do %>
+          <%= pub.input :default, :label => "Default page in section?", :required => false %>
           <%= pub.input :custom_slug, :required => false %>
           <%= pub.input :collection_publishable_type_id, :as => :select, :collection => Publinator::PublishableType.all, :required => false %>
           <%= pub.input :collection_scope, :required => false %>
@@ -47,6 +48,7 @@
           <%= pub.input :archive_at, :as => :datetime_select, :required => false %>
           <%= pub.input :hide_in_submenu, :as => :boolean, :required => false %>
           <%= pub.input :archived, :as => :boolean, :required => false %>
+          <%= pub.input :position, :required => false %>
         <% end %>
       <% end %>
     </div>
