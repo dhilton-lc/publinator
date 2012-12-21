@@ -16,7 +16,11 @@
       <%= form.inputs do %>
         <div id="preview"></div>
         <% @publishable.editable_fields.collect{ |an| an.to_sym }.each do |field| %>
-          <%= form.input field %>
+          <% if @publishable.column_for_attribute( field ).type == :datetime %>
+            <%= form.input field, :start_year => 2000, :end_year => Time.new.year + 1 %>
+          <% else %>
+            <%= form.input field %>
+          <% end %>
         <% end %>
       <% end %>
     </div>
