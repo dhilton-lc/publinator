@@ -9,3 +9,36 @@ table#publishables {
     margin-left: 20em;
   }
 }
+
+#content_blocks {
+  .content-block {
+    position: relative;
+    padding: 1em;
+    border: 1px solid #666;
+    a.overlay {
+      text-align: center;
+      font-size: large;
+      padding: 2em;
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      background-color: white;
+      border: 1px solid #666;
+      opacity: 0;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+    .controls {
+      z-index: 10;
+      padding: 0.25em;
+      border: 1px solid #333;
+      margin: 0.2em;
+      background-color: rgba(0,0,0,0.2);
+    }
+  }
+
+}

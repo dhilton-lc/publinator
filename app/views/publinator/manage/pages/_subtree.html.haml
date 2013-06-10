@@ -1,0 +1,17 @@
+%li{:id => "page_#{node.id}", :data => { :item_id => node.id } }
+  .handle.ui-state-default
+    %a.toggle.ui-icon.ui-icon-plusthick{:href=>"javascript:void(0);", :style => "font-size: larger; cursor: auto;"} toggle
+    .controls
+      = link_to "edit", edit_manage_page_path(node), :class => "ui-icon ui-icon-pencil"
+      = link_to "public", node.pub_path, :class => "ui-icon ui-icon-newwin"
+      = link_to "delete", manage_page_path(node), :method => :delete, :class => "danger ui-icon ui-icon-trash", :confirm => "Delete this page?"
+    %a.move.ui-icon.ui-icon-arrowthick-2-n-s{:style => "font-size: larger; cursor: move;"} move
+    = link_to node.title, manage_page_content_blocks_path(node)
+    &nbsp;
+    %span{:style => "font-size: 0.75em;"}
+      = link_to "( #{truncate(node.pub_path, :length => 80)} )", node.pub_path
+    //%span.publication_date= l node.updated_at, :format => :short
+
+  %ol{:style => "display: none;"}
+    - if node.has_children?
+      = render :partial => "subtree", :collection => node.children, :as => :node

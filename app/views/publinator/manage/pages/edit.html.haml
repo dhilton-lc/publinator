@@ -1,0 +1,11 @@
+%h3 Editing Page Properties
+
+%h3
+  '#{@page.title}'
+  %small (#{(@page.pub_path)})
+
+= render :partial => "form"
+
+%br
+
+= link_to "Back to Sitemap", sitemap_manage_publications_path

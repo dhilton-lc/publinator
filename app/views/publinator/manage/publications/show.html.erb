@@ -1,0 +1,20 @@
+
+<% if @publication.publishable_type == 'Publinator::Page' %>
+
+<h1><%= @publication.publishable.title %></h1>
+
+<% @publication.publishable.asset_types.each do |ai| %>
+  <%=  image_tag @publication.publishable.asset_files("header").first.asset.url if @publication.publishable.asset_files("header") && @publication.publishable.asset_files("header").first %>
+<% end %>
+
+<p>
+<%= m(@publication.publishable.body) %>
+</p>
+
+<div id="controls">
+  <%= link_to "Back", manage_pages_path %>
+  <%= link_to "Edit", edit_manage_page_path(@publication.publishable) %>
+  <%= link_to "Public", @publication.publishable.pub_path, :target => "_new" %>
+  <%= link_to "Delete", manage_page_path(@publication.publishable), :method => :delete, :class => "danger", :confirm => "Delete this #{@publishable.class.to_s}?" %>
+</div>
+<% end %>

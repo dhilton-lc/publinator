@@ -1,8 +1,8 @@
 module Publinator
   class Site < ActiveRecord::Base
     attr_accessible :abbr, :description, :name, :parent_id, :state, :title, :default
+
     has_many :domain_names, :class_name => "Publinator::DomainName"
-    has_many :sections,     :class_name => "Publinator::Section"
     has_many :publications, :class_name => "Publinator::Publication"
 
     # get the layout for the site

@@ -13,6 +13,9 @@
 
 
   <%= f.inputs %>
+  <%= f.semantic_fields_for :publication do |pub| %>
+    <%= pub.input :menu_label, :required => false %>
+  <% end %>
   <div class="actions">
     <%= f.actions %>
   </div>

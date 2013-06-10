@@ -3,7 +3,7 @@
 # TODO Validate: children have to have the same site_id as parents
 module Publinator
   class Section < ActiveRecord::Base
-    attr_accessible :layout, :name, :parent_id, :site, :section_slug, :position
+    attr_accessible :layout, :name, :parent_id, :site, :site_id, :section_slug, :position
 
     has_many :publications, :class_name => "Publinator::Publication", :order => "position"
     before_create :generate_section_slug
@@ -24,6 +24,10 @@ module Publinator
 
     def index_item
       Publinator::Publication.find_by_section_id_and_slug(id, 'index')
+    end
+
+    def pub_path
+      path
     end
 
     def path

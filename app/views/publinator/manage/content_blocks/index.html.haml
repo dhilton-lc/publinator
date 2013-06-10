@@ -1,0 +1,29 @@
+.row-fluid
+  .span12
+    %h2 #{@page.title}
+
+.row-fluid
+  .span12
+    #content_blocks
+      - @page.publication.content_blocks.each do |blk|
+        - if ( blk.content_type.present? )
+          = render :partial => "preview", :locals => { :content_block => blk }
+
+.row-fluid
+  .span12
+    = render :partial => 'new', :locals => {:content_block => @content_block}
+    %br
+    = link_to 'Back to Sitemap', sitemap_manage_publications_path
+
+#editContentModal{ :class => "modal hide fade" }
+  .modal-header
+    %h3
+      Edit Content
+      %button{:type => 'button', :class => 'close', :data => { :dismiss => 'modal' }} &times;
+  .modal-body
+    .content-block
+  .modal-footer
+    %button#updateContentButton{ :class => 'btn btn-primary', 'aria-hidden' => "true" } Update Block
+    %button{ :class => 'btn', :data => { :dismiss => 'modal' }, 'aria-hidden' => "true" } Close
+
+

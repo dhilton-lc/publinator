@@ -2,9 +2,6 @@ module Publinator
   require 'rdiscount'
 
   module ApplicationHelper
-    def link_to_page(link_text, section, slug)
-      link_to link_text, "/#{section}/#{slug}"
-    end
 
     def m(markdown_text)
       return if !markdown_text || markdown_text.blank?
@@ -12,7 +9,17 @@ module Publinator
     end
 
     def menu_item(object)
-      if object.respond_to?(:is_publishable?)
+      if object.instance_of? Publinator::Publication
+        if object.publishable_type == 'Publinator::PublishableType'
+          collection_li_tag(
+            object.publishable.publishable_class.send(:all),
+            raw(object.publishable.menu_label_text),
+            object.pub_path
+          )
+        else
+          li_tag(object.publishable)
+        end
+      elsif object.respond_to?(:is_publishable?)
         li_tag(object)
       else
         collection_li_tag(object)
@@ -55,7 +62,7 @@ module Publinator
     def li_tag(object)
       content_tag(:li, :id => object.my_slug) do
         li_content = ""
-        li_content += link_to raw(object.title), object.path
+        li_content += link_to raw(object.menu_label_text), object.pub_path
         if object.menu_collection && object.menu_collection.length > 0
           li_content += (submenu(object).html_safe)
         end
@@ -105,5 +112,6 @@ module Publinator
     def toggle_details(lnk_text, obj_link)
       link_to lnk_text, obj_link, :class => 'toggle_details'
     end
+
   end
 end

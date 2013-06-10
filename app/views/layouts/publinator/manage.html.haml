@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title= @title || current_site_name
+    = stylesheet_link_tag    "publinator/manage", :media => "all"
+    = javascript_include_tag "publinator/manage"
+    = csrf_meta_tags
+  %body
+    #header
+      .container{:style => "max-width: 962px;"}
+        %strong
+          = link_to "Managing", manage_path
+          \:: #{link_to (current_site_name || "Publinator"), manage_path}
+    #content
+      .container{:style => "max-width: 962px;"}
+        - [:notice, :error, :alert, :success].each do |level|
+          - unless flash[level].blank?
+            .row-fluid
+              .span12
+                %div{:class => flash_class(level)}
+                  %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                  = content_tag :span, flash[level]
+        = yield
+    #footer
+      .container{:style => "max-width: 900px;"}
+        = link_to "Public Site", "/", :target => "_new"

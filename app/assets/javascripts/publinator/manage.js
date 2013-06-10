@@ -13,6 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require bootstrap-transition
+//= require bootstrap-alert
+//= require bootstrap-modal
+//= require bootstrap-tab
 //= require_directory "./manage"
 //= require_self
 
@@ -46,17 +50,14 @@ $(function() {
 
   $(".sortable_list").disableSelection();
 
-  $("#tabs").tabs();
+  // $("#tabs").tabs();
 
   $("fieldset.actions button").button({ icons: { primary: "ui-icon-check" }});
   $("#publishable_type_button").button();
   $(".new_button").button({ icons: { primary: "ui-icon-document" }});
 
-
-
-
   $(document).on("keypress keydown", function(event) {
-    console.log(event);
+    //console.log(event);
     if (event.ctrlKey || event.metaKey) {
       if (event.keyCode == 83) {
         event.preventDefault();
@@ -69,7 +70,6 @@ $(function() {
         event.stopPropagation();
         loadPreview();
         return false;
-
       }
     }
   });

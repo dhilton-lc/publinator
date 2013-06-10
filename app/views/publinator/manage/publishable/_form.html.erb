@@ -43,7 +43,6 @@
     <div id="tabs-3">
       <%= form.semantic_fields_for :publication, @publishable.publication do |pub| %>
         <%= pub.inputs "Advanced Publication Settings", :class => "advanced_settings" do %>
-          <%= pub.input :default, :label => "Default page in section?", :required => false %>
           <%= pub.input :custom_slug, :required => false %>
           <%= pub.input :collection_publishable_type_id, :as => :select, :collection => Publinator::PublishableType.all, :required => false %>
           <%= pub.input :collection_scope, :required => false %>

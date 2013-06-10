@@ -1,6 +1,8 @@
 Publinator::Engine.routes.draw do
 
   match "/manage" => 'manage#index'
+  match "/manage/index" => 'manage#index'
+
   match "/manage/preview" => 'manage#preview'
 
   namespace :manage do
@@ -40,10 +42,27 @@ Publinator::Engine.routes.draw do
 
     resources :pages do
       collection do
-        post :sort
-        post :preview
+        post  :sort
+        post  :preview
+        get   :sitemap
+      end
+      member do
+        post :add_asset_files
+      end
+      resources :content_blocks # TODO: Do the same for publishable types (maybe someday)
+    end
+
+    resources :publications do
+      collection do
+        post  :sort
+        post  :preview
+        get   :sitemap
+      end
+      member do
+        post :add_asset_files
       end
     end
+
     resources :sites
     resources :sections do
       member do
@@ -52,7 +71,10 @@ Publinator::Engine.routes.draw do
     end
     resources :publishable_types
     resources :asset_items
+    resources :asset_files
+    resources :publication_asset_files
   end
+
 
   #constraints(Publinator::PublishableType) do
     #match '/:publishable_type/' => "publishable#index", :requirements => {
@@ -71,20 +93,18 @@ Publinator::Engine.routes.draw do
   end
 
 
-  constraints(Publinator::Section) do
-    match '/:section/' => "section#index", :requirements => {
-       :section =>  /\A([a-zA-Z0-9]+[a-zA-Z0-9\-_]*)\z/i
-    }
+  #constraints(Publinator::Section) do
+  #  match '/:section/' => "section#index", :requirements => {
+  #     :section =>  /\A([a-zA-Z0-9]+[a-zA-Z0-9\-_]*)\z/i
+  #  }
+  #
+  #  match '/:section/:id' => "section#show", :requirements => {
+  #    :id => /\A\d*\z/i,
+  #    :section =>  /\A([a-zA-Z0-9]+[a-zA-Z0-9\-_]*)\z/i
+  #    }, :as => "publishable"
+  #end
 
-    match '/:section/:id' => "section#show", :requirements => {
-      :id => /\A\d*\z/i,
-      :section =>  /\A([a-zA-Z0-9]+[a-zA-Z0-9\-_]*)\z/i
-      }, :as => "publishable"
-  end
-
-  match "/:slug", :controller => :publishable, :action => :page, :requirements => {
-    :slug => /\A([a-zA-Z]+[a-zA-Z\-_]*)\z/i
-  }, :as => 'publishable'
+  match "/*slug", :controller => :publishable, :action => :page, :as => 'publishable'
 
   root :to  => "home#index"
   match '/' => 'home#index'

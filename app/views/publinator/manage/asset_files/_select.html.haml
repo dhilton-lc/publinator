@@ -1,0 +1,9 @@
+%li.ui-state-default{:id => "asset_file_#{select.id}", :style => "margin-bottom: 4px;"}
+  .row-fluid
+    .span1{:style => "padding:0.25em;"}
+      %input.asset_file_selector{:type => "checkbox", :name => "asset_file_#{select.id}", :value => select.id }
+    .span11
+      = link_to "#{select.title? ? select.title : 'Untitled'} (#{select.asset_file_name})", edit_manage_asset_file_path(select)
+      %br/
+      .details
+        = truncate(select.asset.url, :length => 80)

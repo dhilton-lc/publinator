@@ -11,7 +11,11 @@
  *= require_self
  *= require jquery.ui.all
  *= require './manage/publishable.css.scss'
+ *= require formtastic-bootstrap
 */
+
+@import "bootstrap";
+@import "bootstrap-responsive";
 
 body {
   font-family: "helvetica neue", helvetica, verdana, arial, helvetica, "sans-serif";
@@ -20,10 +24,13 @@ body {
   margin: 0;
   padding: 0;
 
+  div.flash {
+  }
+
   #header {
     background-color: #ccc;
     margin: 0;
-    padding: 1em;
+    padding: 0.25em 1em;
     h3 {
       padding: 0;
       margin: 0;
@@ -33,7 +40,7 @@ body {
   #content {
     background-color: #fff;
     margin: 0;
-    padding: 2em;
+    padding: 0em 2em;
 
     .ui-icon {
       display: inline-block;
@@ -50,14 +57,28 @@ body {
       }
     }
 
-    ul#publishables {
+    #publishables {
       list-style-type: none;
+      padding-left: 0px;
 
       li {
-        width: 600px;
-        border: 1px solid silver;
-        margin: 6px;
-        padding: 8px;
+        position: relative;
+        max-width: 800px;
+
+        .toggle {
+          position: absolute;
+          left: -16px;
+          top: 8px;
+        }
+
+        .handle {
+          border: 1px solid silver;
+          margin: 6px;
+          padding: 8px;
+          .move {
+            cursor: move;
+          }
+        }
 
         .details {
           font-size: 0.7em;
@@ -72,6 +93,12 @@ body {
         .controls {
           clear: both;
           float: right;
+          cursor: auto;
+        }
+
+        ol, ul {
+          list-style-type: none;
+          padding-left: 20px;
         }
       }
     }
@@ -141,5 +168,11 @@ body {
         }
       }
     }
+  }
+}
+
+.form-horizontal {
+  .control-group {
+    margin-bottom: 10px;
   }
 }

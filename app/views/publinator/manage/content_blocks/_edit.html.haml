@@ -1,0 +1,7 @@
+.content-block{:id => "content_block_#{@content_block.id}"}
+  = form_for( [ :manage, @page, @content_block ], :remote => true ) do |f|
+    = f.fields_for :content do |content|
+      - if @content_block.content_type == 'Publinator::MarkdownContent'
+        = render :partial => 'markdown_content_form', :locals => { :content => content }
+      - else
+        %h3= "Error! No form for #{@content_block.content_type}"

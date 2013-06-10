@@ -32,14 +32,18 @@ module Publinator
     end
 
     def body_id
-      if @section
-        return @section.slug
-      elsif @page
-        return @page.section.slug
+      if @page
+        #@page.page_layout
+        slugs = @page.publication.pub_path.split('/')
+        if ( slugs.count >= 3 )
+          slugs[2]
+        else
+          slugs[-1]
+        end
       elsif @publishable
-        return @publishable.class.to_s.downcase
+        @publishable.class.to_s.downcase
       else
-        return "home"
+        "home"
       end
     end
 

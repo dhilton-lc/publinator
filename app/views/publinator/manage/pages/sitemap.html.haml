@@ -1,0 +1,7 @@
+%h2 Sitemap
+
+%ol#publishables{:data => { :update_url => sort_manage_pages_path }}
+  - @roots.each do |root|
+    = render :partial => "subtree", :locals => { :node => root }
+
+= link_to "Add Page", "/manage/pages/new"

@@ -1,0 +1,38 @@
+- id_prefix = node.publishable_type.underscore.parameterize
+
+%li{:id => "#{id_prefix}-#{node.id}",
+    :data => { :item_id => node.id },
+    :class => id_prefix }
+  .handle{ :class => "#{id_prefix == 'publinator-page' ? 'ui-state-default' : 'ui-priority-secondary'}" }
+    - if id_prefix == 'publinator-page'
+      %a.toggle.ui-icon.ui-icon-plusthick{:href=>"javascript:void(0);", :style => "font-size: larger; cursor: auto;"} toggle
+    .controls
+      - if node.publishable_type == "Publinator::Page"
+        = link_to "edit content", manage_page_content_blocks_path(node.publishable), :class => "ui-icon ui-icon-pencil"
+        = link_to "edit properties", edit_manage_page_path(node.publishable), :class => "ui-icon ui-icon-gear"
+        = link_to "delete", manage_page_path(node.publishable), :method => :delete, :class => "danger ui-icon ui-icon-trash", :confirm => "Delete this page?"
+      - else
+        = node.publishable.class.to_s.demodulize
+    %a.move.ui-icon.ui-icon-arrowthick-2-n-s{:style => "font-size: larger; cursor: move;"} move
+    -#= link_to node.title, manage_page_content_blocks_path(node)
+    - if node.publishable_type == "Publinator::Page"
+      = link_to node.publishable.menu_label_text, manage_page_content_blocks_path(node.publishable)
+    - else
+      #{node.publishable.menu_label_text}
+    &nbsp;
+    %span{:style => "font-size: 0.75em;"}
+      = link_to "( #{truncate(node.pub_path, :length => 80)} )", node.pub_path, :target => "_blank"
+    -#%span.publication_date= l node.updated_at, :format => :short
+
+  - if node.publishable_type == 'Publinator::Page'
+    %ol{:style => "display: none;"}
+      - if node.has_children?
+        = render :partial => "subtree", :collection => node.children, :as => :node
+-#
+  - elsif node.publishable_type == 'Publinator::PublishableType'
+    - children = node.publishable.publishable_class.send(:all).collect { |o| o.publication }
+    = render :partial => "subtree", :collection => children, :as => :node
+  - elsif node.publishable.respond_to? :publishables
+    - children = node.publishable.publishables.collect { |o| o.publication }
+    = render :partial => "subtree", :collection => children, :as => :node
+

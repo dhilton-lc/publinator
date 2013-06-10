@@ -1,0 +1,11 @@
+var new_preview_html = '<%= escape_javascript( render( :partial => "preview.html", :locals => { :content_block => @content_block } ) ) %>';
+var preview_div = $('#content_blocks .content_block_<%= @content_block.id %>');
+
+if ( preview_div.length > 0 ) {
+  preview_div.replaceWith( new_preview_html )
+}
+else {
+  $('#content_blocks').append( new_preview_html );
+}
+
+$('#editContentModal').modal('hide');

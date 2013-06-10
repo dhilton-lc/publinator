@@ -1,3 +1,3 @@
 module Publinator
-  VERSION = "0.0.44"
+  VERSION = "0.1.01"
 end

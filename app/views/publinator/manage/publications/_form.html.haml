@@ -1,0 +1,79 @@
+= semantic_form_for [:manage, @publication], :html => { :multipart => true } do |form|
+  - if @publication.errors && @publication.errors.count > 0
+    - @publication.errors.full_messages.each do |e|
+      = e
+      %br/
+  #tabs
+    %ul.nav.nav-tabs
+      %li.active
+        %a{:href => "#tabs-1", :data => { :toggle => "tab" }}
+          = @publication.publishable_type == "Publinator::Page" ? "Page" : @publication.publishable_type
+      %li
+        %a{:href => "#tabs-2", :data => { :toggle => "tab" }} Assets
+      %li
+        %a{:href => "#tabs-3", :data => { :toggle => "tab" }} Publication
+      %li
+        %a{:href => "#tabs-4", :data => { :toggle => "tab" }} SEO Settings
+  .tab-content
+    #tabs-1.tab-pane.active
+      #preview
+        //TODO
+      - if @publication.publishable_type == 'Publinator::Page'
+        = form.semantic_fields_for :publishable do |pg|
+          .row-fluid
+            .span4
+              = form.input :title, :input_html => { :class => 'span12' }
+            .span8
+              = form.input :subtitle, :input_html => { :class => 'span12' }
+          .row-fluid
+            .span4
+              = form.input :my_layout, :as => :select, :collection => Publinator.options[:layout_options]
+            .span4
+              = form.input :default_layout, :as => :select, :collection => Publinator.options[:layout_options]
+          .row-fluid
+            .span12
+              = form.input :reset_menu
+          .row-fluid
+            .span12
+              = form.input :redirect_to_child
+      - else
+        = "#{@publication.publishable_type} not yet supported"
+    #tabs-2.tab-pane
+      #asset_file_fields
+        %ol#pub_asset_files{:style => "list-style-type: none; margin:0px; padding:0px;"}
+          // = pub.semantic_fields_for :publication_asset_files do |assets_form|
+          - @publication.publication_asset_files.each do |paf|
+            = render :partial => 'asset_file', :locals => { :paf => paf }
+
+      = link_to "Add Asset", "/manage/asset_files", :data => { :toggle => 'modal', :target => '#addAssetModal' }
+
+      #addAssetModal{ :class => "modal hide fade" }
+        .modal-header
+          %h3
+            Add Asset
+            %button{:type => 'button', :class => 'close', :data => { :dismiss => 'modal' }} &times;
+        .modal-body
+        .modal-footer
+          %button#addAssetButton{ :class => 'btn btn-primary', 'aria-hidden' => "true" } Add Asset
+          %button{ :class => 'btn', :data => { :dismiss => 'modal' }, 'aria-hidden' => "true" } Close
+
+        %br
+    #tabs-3.tab-pane
+      = form.input :require_user, :label => "Require Login?", :required => false
+      // = pub.input :default, :label => "Default page in section?", :required => false
+      = form.input :slug, :required => false
+      = form.input :custom_slug, :required => false
+      = form.input :collection_publishable_type_id, :as => :select, :collection => Publinator::PublishableType.all, :required => false
+      = form.input :collection_scope, :required => false
+      = form.input :render_collection, :as => :boolean, :required => false
+      // = pub.input :publish_at, :as => :datetime_select, :required => false
+      // = pub.input :unpublish_at, :as => :datetime_select, :required => false
+      // = pub.input :archive_at, :as => :datetime_select, :required => false
+      = form.input :hide_in_submenu, :as => :boolean, :required => false
+      // = pub.input :archived, :as => :boolean, :required => false
+      // = pub.input :position, :required => false
+    #tabs-4.tab-pane
+      = form.input :title_tag, :label => "HTML Title Tag", :required => false
+      = form.input :meta_description, :required => false
+  = form.actions do
+    = form.action :submit, :as => :button

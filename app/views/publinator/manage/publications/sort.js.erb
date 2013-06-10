@@ -1,0 +1,1 @@
+$('#<%= raw("#{@publication.publishable_type.underscore.parameterize}-#{@publication.id}") %>').replaceWith( "<%= escape_javascript( render( :partial => 'subtree', :locals => {:node => @publication}) ) %>" );

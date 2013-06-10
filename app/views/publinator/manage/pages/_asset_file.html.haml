@@ -1,0 +1,33 @@
+%li{ :id => "pub_asset_file_#{paf.id}"}
+  = semantic_fields_for 'page[publication_attributes][publication_asset_files_attributes][]', paf, :index => nil do |assets_form|
+    .handle.ui-state-default{:style => "padding: 10px 8px; margin-bottom: 10px;"}
+      .pull-right
+        = link_to 'remove', manage_publication_asset_file_path( paf ), :method => :delete, :remote => true, :confirm => "Are you sure?", :class => 'ui-icon ui-icon-trash', :title => "Remove asset from publication"
+      .pull-left
+        %a.move.ui-icon.ui-icon-arrowthick-2-n-s{:style => "font-size: larger; cursor: move;"} move
+      .row-fluid
+        .span1
+          = assets_form.input :id, :as => :hidden
+          = assets_form.input :publication_id, :as => :hidden
+          = assets_form.input :asset_file_id, :as => :hidden
+          = assets_form.input :position, :as => :hidden, :input_html => { :class => "position_input" }
+          - af = assets_form.object.asset_file
+          - afa = af.asset
+          - if afa.present?
+            = link_to(image_tag(afa.url(:thumb)), afa.url(:original), :target => "_new", :style => "text-align: right;")
+          - else
+            &nbsp;
+        .span10{:style => "font-size: 12px;"}
+          .row-fluid
+            .span12
+              #{ af.title.blank? ? '(Untitled)' : af.title } : #{af.asset_file_name}
+          .row-fluid
+            .span2
+              %strong Type:
+              #{af.asset_type}
+            .span5
+              %strong Citation:
+              #{af.citation}
+            .span5
+              %strong Author:
+              #{af.author}

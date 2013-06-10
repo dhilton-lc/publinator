@@ -2,6 +2,10 @@ require_dependency "publinator/application_controller"
 
 module Publinator
   class PublishableController < Publinator::ApplicationController
+
+    #before_filter :find_page, :only => [ :page ]
+    before_filter :find_publication, :only => [ :page ]
+
     def index
       @publication = Publinator::Publication.find_by_publishable_type_and_slug(params[:publishable_type].classify, 'index')
       @publishable_type = Publinator::PublishableType.find_by_name(params[:publishable_type].classify)
@@ -22,12 +26,14 @@ module Publinator
       end
     end
 
-    # Only used for pages without sections
     def page
-      @publication = Publinator::Publication.orphans.find_by_publishable_type_and_slug('Publinator::Page', params[:slug])
-      if @publication
-        @publishable = @publication.publishable
-        render "publinator/publishable/show"
+      if @publishable
+        begin
+          render "#{@publishable.pub_path}"
+        rescue ActionView::MissingTemplate
+          render "publinator/publishable/show"
+        end
+
       else
         raise ActionController::RoutingError.new('Not Found')
       end
@@ -43,5 +49,35 @@ module Publinator
         render "publinator/publishable/show"
       end
     end
+
+    protected
+
+    def find_publication
+      @publication = Publinator::Publication.decompose_slug( params[:slug] )
+      if @publication
+        @publishable = @publication.publishable
+        if ( @publication.render_collection )
+          @publishables = @publication.collection
+        end
+        if @publication.publishable_type == 'Publinator::Page'
+          @page = @publishable
+        end
+        if @publication.require_user
+          authenticate_user!
+        end
+      end
+    end
+
+    def find_page
+      @page = Publinator::Page.decompose_slug( params[:slug] )
+      if @page
+        @publishable = @page
+        @publication = @page.publication
+        if @publication.require_user
+          authenticate_user!
+        end
+      end
+    end
+
   end
 end
