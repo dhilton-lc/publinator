@@ -1,0 +1,15 @@
+%h3 Assets
+
+= semantic_form_for [:manage, @asset_file] do |form|
+  .row-fluid
+    .span6
+      = form.input :asset_type, :as => :select, :collection => ['header','pdf_document','spec_sheet','pdf_file','image','avatar'], :required => true
+    .span6
+      = form.input :asset, :as => :file
+  .row-fluid
+    .span6
+      - @asset_file.editable_fields.collect{ |an| an.to_sym }.each do |field|
+        = form.input field, :input_html => {:class => 'span12'}
+
+  = form.actions do
+    = form.action :submit, :as => :button

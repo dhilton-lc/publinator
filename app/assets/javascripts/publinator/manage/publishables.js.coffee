@@ -10,9 +10,11 @@ $.fn.toggleClick = ()->
 
 $(document).ready ->
 
-  $('#addAssetModal').on 'hidden', ()->
+  $('#addAssetModal, #addAssetFileModal, #editAssetFileModal').on 'hidden', ()->
     $(this).removeData 'modal'
 
+  $('#addAssetFileButton, #updateAssetFileButton').on 'click', ()->
+    $(this).closest('.modal').find('form').submit()
 
   $('#addAssetButton').on 'click', ()->
     # Collect all selected asset items

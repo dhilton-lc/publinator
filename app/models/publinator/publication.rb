@@ -20,8 +20,8 @@ module Publinator
 
     has_many :content_blocks
 
-    has_many :publication_asset_files, :class_name => "Publinator::PublicationAssetFile", :uniq => true
-    has_many :assets, :uniq => true, :class_name => "Publinator::AssetFile", :through => :publication_asset_files, :source => :asset_file do
+    has_many :publication_asset_files, :class_name => "Publinator::PublicationAssetFile"
+    has_many :assets, :class_name => "Publinator::AssetFile", :through => :publication_asset_files, :source => :asset_file do
       def <<(new_asset)
         super( Array(new_asset) - proxy_association.owner.assets )
       end

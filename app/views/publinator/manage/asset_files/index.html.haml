@@ -1,10 +1,10 @@
 .row-fluid
   .span12
-    .pull-right
-      = form_for @search, :url => manage_asset_files_path, :html => {:method => :get} do |f|
+    .pull-right{:style => "margin-top: 0.75em;"}
+      = form_for @search, :url => manage_asset_files_path, :html => {:method => :get, :class => "form-inline"} do |f|
         = f.label :asset_file_name_contains, "Search by filename"
         = f.text_field :asset_file_name_contains
-        = f.submit :search
+        = f.submit :search, :as => :button, :class => "btn"
 
     %h2 Assets
 
@@ -16,3 +16,28 @@
       = render :collection => @asset_files, :partial => "summary"
 
     = will_paginate @asset_files
+
+    %br
+
+    = link_to 'Add Asset', new_manage_asset_file_path, :data => { :toggle => 'modal', :target => '#addAssetFileModal' }
+
+#addAssetFileModal{ :class => "modal hide fade" }
+  .modal-header
+    %h3
+      Add Asset File
+      %button{:type => 'button', :class => 'close', :data => { :dismiss => 'modal' }} &times;
+  .modal-body
+  .modal-footer
+    %button#addAssetFileButton{ :class => 'btn btn-primary', 'aria-hidden' => "true" } Add Asset File
+    %button{ :class => 'btn', :data => { :dismiss => 'modal' }, 'aria-hidden' => "true" } Close
+
+#editAssetFileModal{ :class => "modal hide fade" }
+  .modal-header
+    %h3
+      Edit Asset File
+      %button{:type => 'button', :class => 'close', :data => { :dismiss => 'modal' }} &times;
+  .modal-body
+  .modal-footer
+    %button#updateAssetFileButton{ :class => 'btn btn-primary', 'aria-hidden' => "true" } Update Asset File
+    %button{ :class => 'btn', :data => { :dismiss => 'modal' }, 'aria-hidden' => "true" } Close
+

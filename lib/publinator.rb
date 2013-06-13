@@ -62,8 +62,8 @@ module Publinator
     end
 
     def assets_by_type(asset_type_text = nil)
-      return assets if !asset_type_text
-      assets.where(:asset_type => asset_type_text)
+      return publication.assets if !asset_type_text
+      publication.assets.where(:asset_type => asset_type_text)
     end
 
     def my_slug

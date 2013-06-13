@@ -1,0 +1,18 @@
+%h3 Edit Asset File '#{@asset_file.asset_file_name}'
+
+= semantic_form_for [:manage, @asset_file] do |form|
+  .row-fluid
+    .span2
+      -if @asset_file.asset.present?
+        = link_to(image_tag(@asset_file.asset.url(:thumb)), @asset_file.asset.url(:original), :target => "_new")
+    .span5
+      = form.input :asset, :as => :file
+    .span5
+      = form.input :asset_type, :as => :select, :collection => ['header','pdf_document','spec_sheet','pdf_file','image','avatar']
+  .row-fluid
+    .span6
+      - @asset_file.editable_fields.collect{ |an| an.to_sym }.each do |field|
+        = form.input field, :input_html => {:class => 'span12'}
+
+  = form.actions do
+    = form.action :submit, :as => :button

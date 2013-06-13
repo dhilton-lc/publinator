@@ -1,0 +1,10 @@
+#add_asset_file_errors
+  - flash.each_with_index do |(k,v),i|
+    .alert.alert-error.alert-block
+      %a.close{"data-dismiss" => "alert", :style => "float:right"} &times;
+      - if v.is_a?(Array)
+        %ul
+          - v.each do |vv|
+            %li= raw vv
+      - else
+        = raw v

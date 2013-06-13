@@ -60,7 +60,7 @@
             - @page.publication.publication_asset_files.each do |paf|
               = render :partial => 'asset_file', :locals => { :paf => paf }
 
-      = link_to "Add Asset", "/manage/asset_files", :data => { :toggle => 'modal', :target => '#addAssetModal' }
+      = link_to "Add Asset", "/manage/asset_files.js", :data => { :toggle => 'modal', :target => '#addAssetModal' }
 
       #addAssetModal{ :class => "modal hide fade" }
         .modal-header

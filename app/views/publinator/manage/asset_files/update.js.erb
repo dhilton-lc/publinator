@@ -1,0 +1,11 @@
+$('#editAssetFileModal').modal('hide');
+
+$('li#asset_file_<%=@asset_file.id%>').replaceWith( '<%= escape_javascript( render( :partial => 'summary.html', :locals => { :summary => @asset_file } ) )%>' )
+
+<% flash.each_with_index do |(k,v),i| %>
+  <% if v.is_a?(Array) %>
+    <%= "" %>
+  <% else %>
+    <%= raw "alert(\"#{ escape_javascript( raw v ) }\");" %>
+  <% end %>
+<% end %>

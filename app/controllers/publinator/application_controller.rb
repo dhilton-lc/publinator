@@ -4,6 +4,8 @@ module Publinator
     before_filter :in_a_site
     helper_method :current_site, :current_domain, :current_layout, :current_site_name, :body_id, :current_controller
 
+    before_filter proc { |controller| (controller.action_has_layout = false) if controller.request.xhr? }
+
     def current_site
       return nil if current_domain.nil?
       @current_site ||= current_domain.site

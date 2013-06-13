@@ -82,7 +82,8 @@ module Publinator
     end
 
     def publishables
-      (self.asset_files - self.asset_files('header')).sort_by{|asset_file| asset_file.position}
+      (self.assets_by_type - self.assets_by_type('header')) # FIXME TODO Verify sort order
+      #(self.asset_files - self.asset_files('header')).sort_by{|asset_file| asset_file.position}
     end
 
     def menu_collection

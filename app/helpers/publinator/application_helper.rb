@@ -95,7 +95,7 @@ module Publinator
     end
 
     def asset_file_tag(object, asset_type, size = 'original', img_class = nil)
-      imgs = object.asset_files(asset_type)
+      imgs = object.assets_by_type(asset_type)
       return unless imgs && imgs.first
       if img_class
         image_tag(imgs.first.asset.url(size.to_sym), :class => img_class)
