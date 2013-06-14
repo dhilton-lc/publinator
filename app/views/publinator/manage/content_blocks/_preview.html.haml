@@ -1,20 +1,21 @@
-.content-block{:id => "content_block_#{content_block.id}"}
-  -#%a.overlay{:href => "javascript:void(0);"} Edit this block
-
-  %div.controls{:style => "float: right;"}
-    = link_to 'delete',
-        manage_page_content_block_path(content_block.publication.publishable, content_block),
-        :method => :delete,
-        :confirm => "Are you sure?",
-        :remote => :true
-    |
-    = link_to 'edit',
-        edit_manage_page_content_block_path(content_block.publication.publishable, content_block),
-        :remote => true
+%li.content-block{:id => "content_block_#{content_block.id}", :data => { :item_id => content_block.id } }
+  .handle.ui-state-default
+    .controls{:style => "float:right;"}
+      = link_to 'edit',
+          edit_manage_page_content_block_path(content_block.publication.publishable, content_block),
+          :remote => true,
+          :class => "ui-icon ui-icon-pencil"
+      = link_to 'delete',
+          manage_page_content_block_path(content_block.publication.publishable, content_block),
+          :method => :delete,
+          :confirm => "Are you sure?",
+          :remote => :true,
+          :class => "ui-icon ui-icon-trash"
+    %a.move.ui-icon.ui-icon-arrowthick-2-n-s{:style => "font-size: larger; cursor: move;"} move
 
   - unless content_block.content.present?
     .alert.alert-error Content block contains no content
   - else
-    = content_block.render
+    .content= content_block.render
 
 

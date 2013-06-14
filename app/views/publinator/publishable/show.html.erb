@@ -1,4 +1,13 @@
-<%= m(@publishable.body) %>
+<% if @publishable.publication.publishable_type == 'Publinator::Page' %>
+  <% Publinator.options[:layout_areas].each do |area| %>
+    <% area_sym = area.to_sym %>
+    <% content_for area_sym do %>
+      <%= @publishable.contents( area ) %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= m(@publishable.body) %>
+<% end %>
 
 <% if @publishable.respond_to?(:publishables) && @publishable.publishables.length > 0 && !@publishable.publishables.first.class.nil? && @publication.render_collection? %>
 <ol id="documents">

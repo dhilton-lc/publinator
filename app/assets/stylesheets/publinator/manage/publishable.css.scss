@@ -10,11 +10,24 @@ table#publishables {
   }
 }
 
-#content_blocks {
+.content_area {
+  border: 1px solid #CCC;
+  padding-top: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-bottom: 6px;
+  position: relative;
+
+  ol {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    min-height: 30px;
+  }
+
   .content-block {
     position: relative;
-    padding: 1em;
-    border: 1px solid #666;
+    padding: 0px;
     a.overlay {
       text-align: center;
       font-size: large;
@@ -32,13 +45,8 @@ table#publishables {
         opacity: 0.9;
       }
     }
-    .controls {
-      z-index: 10;
-      padding: 0.25em;
-      border: 1px solid #333;
-      margin: 0.2em;
-      background-color: rgba(0,0,0,0.2);
+    .content {
+      padding: 0.5em;
     }
   }
-
 }

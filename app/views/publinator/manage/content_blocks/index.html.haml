@@ -4,7 +4,7 @@
 
 .row-fluid
   .span12
-    #content_blocks
+    .content_area
       - @page.publication.content_blocks.each do |blk|
         - if ( blk.content_type.present? )
           = render :partial => "preview", :locals => { :content_block => blk }

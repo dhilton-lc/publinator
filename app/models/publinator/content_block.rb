@@ -2,14 +2,19 @@ module Publinator
   class ContentBlock < ActiveRecord::Base
     include RankedModel
 
-    attr_accessible :layout_order, :layout_order_position, :publication, :publication_id, :content_id, :content_type, :content_attributes
+    attr_accessible :layout_order, :layout_order_position,
+      :publication, :publication_id,
+      :content_id, :content_type, :content_attributes,
+      :area
 
     belongs_to :content, :polymorphic => true, :autosave => true
     belongs_to :publication
 
     accepts_nested_attributes_for :content
 
-    ranks :layout_order, :with_same => :publication_id # FIXME also area
+    ranks :layout_order, :with_same => [ :publication_id, :area ]
+
+    default_scope order('layout_order')
 
     def attributes=(attributes = {})
       # FIXME Validate content type

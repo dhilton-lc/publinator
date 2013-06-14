@@ -1,4 +1,5 @@
 %br
 = form_for( [ :manage, @page, @content_block ], :remote => true, :html => { :class => 'form-inline'} ) do |f|
+  = f.select :area, :area => Publinator.options[:layout_areas] # FIXME
   = f.select :content_type, [['Markdown','Publinator::MarkdownContent']]
   = f.submit "Add Content Block", :class => "btn btn-primary"

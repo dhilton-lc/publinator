@@ -49,7 +49,11 @@ Publinator::Engine.routes.draw do
       member do
         post :add_asset_files
       end
-      resources :content_blocks # TODO: Do the same for publishable types (maybe someday)
+      resources :content_blocks do
+        collection do
+          post :sort
+        end
+      end # TODO: Do the same for publishable types (maybe someday)
     end
 
     resources :publications do

@@ -27,13 +27,23 @@ module Publinator
     # When that is done, 'body' of course will only render the blocks in the page's 'body' area
     # Also, this really belongs to 'publishable'!!!! FIXME
     def body
+      self.contents
+    end
+
+    def render_content(blocks)
       rendered_blocks = []
-      self.publication.content_blocks.each do |block|
+      blocks.each do |block|
         rendered_blocks << block.render
       end
-      # TODO: block and/or area and/or page-level caching
-
       rendered_blocks.join("\n").html_safe
+    end
+
+    def contents( area = "main" )
+      self.render_content( self.publication.content_blocks.find(:all, :conditions => {:area => area}) )
+    end
+
+    def orphaned_contents
+      self.render_content( self.publication.content_blocks.where( "area IS NULL OR area = ''" ) )
     end
 
     def menu_root

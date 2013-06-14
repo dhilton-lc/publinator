@@ -1,0 +1,7 @@
+.content_area{:id => "content_area_#{handle}"}
+  .ui-state-highlight
+    Content Area: #{handle}
+  %ol.content_blocks{ :data => {:update_url => sort_manage_page_content_blocks_path(@page), :area => handle } }
+    - blocks.each do |blk|
+      - if ( blk.content_type.present? )
+        = render :partial => "preview", :locals => { :content_block => blk }

@@ -7,7 +7,23 @@ module Publinator
     before_filter :find_page
     before_filter :find_or_build_content_block
 
+    def sort
+      if params[:content_block].has_key?( :area )
+        @content_block.area = params[:content_block].delete(:area)
+      end
+      @content_block.update_attributes( params[:content_block] )
+      @content_block.save
+      respond_to do |format|
+        format.js { render :layout => false }
+      end
+    end
+
     def index
+      begin
+        render 'manage/content_blocks/index'
+      rescue ActionView::MissingTemplate
+        render 'publinator/manage/content_blocks/index'
+      end
     end
 
     def new # Actually not sure I need the 'new' route
@@ -88,6 +104,7 @@ module Publinator
     def find_page
       @page = Page.find(params[:page_id])
       raise ActiveRecord::RecordNotFound unless @page
+      @content_blocks = @page.publication.content_blocks
     end
 
     def find_or_build_content_block

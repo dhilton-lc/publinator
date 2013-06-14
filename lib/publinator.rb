@@ -4,7 +4,8 @@ module Publinator
 
   def self.options
     @options ||= {
-      :layout_options => [ ]
+      :layout_options => [],
+      :layout_areas => []
     }
   end
 
