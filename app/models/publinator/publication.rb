@@ -115,5 +115,13 @@ module Publinator
       end
     end
 
+    def get_block( block )
+      self.content_blocks.where( {:content_type => block.content_type, :content_id => block.content_id } ).first
+    end
+
+    def has_block?( block )
+      self.content_blocks.where( { :content_type => block.content_type, :content_id => block.content_id } ).exists?
+    end
+
   end
 end

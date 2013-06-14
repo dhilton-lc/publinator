@@ -1,6 +1,12 @@
 .content_area{:id => "content_area_#{handle}"}
   .ui-state-highlight
+    .controls{:style => "float:right;"}
+      = link_to 'Add Content',
+        '#',
+        :onclick => "addContentToArea('#{handle}'); return false;",
+        :class => "ui-icon ui-icon-plus"
     Content Area: #{handle}
+
   %ol.content_blocks{ :data => {:update_url => sort_manage_page_content_blocks_path(@page), :area => handle } }
     - blocks.each do |blk|
       - if ( blk.content_type.present? )

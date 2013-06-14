@@ -11,7 +11,16 @@
           :confirm => "Are you sure?",
           :remote => :true,
           :class => "ui-icon ui-icon-trash"
+      - if content_block.shared?
+        = link_to 'destroy',
+            manage_page_content_block_path(content_block.publication.publishable, content_block) + '?delete_all=1',
+            :method => :delete,
+            :confirm => "Are you sure? This will delete ALL instances of this block, from ALL pages!",
+            :remote => :true,
+            :class => "ui-icon ui-icon-circle-close"
     %a.move.ui-icon.ui-icon-arrowthick-2-n-s{:style => "font-size: larger; cursor: move;"} move
+    - if content_block.shared?
+      %em shared block
 
   - unless content_block.content.present?
     .alert.alert-error Content block contains no content

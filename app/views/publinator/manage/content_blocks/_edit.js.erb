@@ -1,3 +1,4 @@
+$('#addContentModal').modal('hide');
 
 $('#editContentModal .modal-body .content-block').replaceWith(
   '<%= escape_javascript( render( :partial => "edit.html", :locals => { :content_block => @content_block } ) ) %>'

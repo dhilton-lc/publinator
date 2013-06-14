@@ -1,5 +1,6 @@
 %br
-= form_for( [ :manage, @page, @content_block ], :remote => true, :html => { :class => 'form-inline'} ) do |f|
-  = f.select :area, :area => Publinator.options[:layout_areas] # FIXME
-  = f.select :content_type, [['Markdown','Publinator::MarkdownContent']]
-  = f.submit "Add Content Block", :class => "btn btn-primary"
+= form_for( [ :manage, @page, @content_block ], :remote => true, :html => {:class => 'form-inline'} ) do |f|
+  = f.hidden_field :area
+  = f.label :content_type
+  = f.select :content_type, { 'New Content Block' => [['Markdown','Publinator::MarkdownContent']],
+    'Shared Content Block' => shared_content_options }

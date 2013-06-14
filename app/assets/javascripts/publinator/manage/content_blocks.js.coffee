@@ -1,5 +1,5 @@
 $(document).ready ()->
-  $('#updateContentButton').on 'click', ()->
+  $('#updateContentButton, #addContentButton').on 'click', ()->
     $(this).closest('.modal').find('form').submit()
 
   $('ol.content_blocks').nestedSortable({
@@ -31,3 +31,7 @@ $(document).ready ()->
         data: {id: item_id, content_block: { layout_order_position: position, area: area } }
       )
   })
+
+window.addContentToArea = (area)->
+  $('form#new_content_block #content_block_area').val(area)
+  $('#addContentModal').modal('show')

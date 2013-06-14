@@ -1,7 +1,25 @@
 .content-block{:id => "content_block_#{@content_block.id}"}
-  = form_for( [ :manage, @page, @content_block ], :remote => true ) do |f|
-    = f.fields_for :content do |content|
-      - if @content_block.content_type == 'Publinator::MarkdownContent'
-        = render :partial => 'markdown_content_form', :locals => { :content => content }
-      - else
-        %h3= "Error! No form for #{@content_block.content_type}"
+  = semantic_form_for( [ :manage, @page, @content_block ], :remote => true ) do |f|
+    #tabs
+      %ul.nav.nav-tabs
+        %li.active
+          %a{:href => "#tabs-1", :data => { :toggle => "tab" }} Content
+        %li
+          %a{:href => "#tabs-2", :data => { :toggle => "tab" }} Style
+        %li
+          %a{:href => "#tabs-3", :data => { :toggle => "tab" }} Sharing Options
+    .tab-content
+      #tabs-1.tab-pane.active
+        = f.semantic_fields_for :content do |content|
+          - partial = @content_block.content_type.demodulize.underscore + '_form'
+          - if lookup_context.exists?( partial, "publinator/manage/content_blocks", true )
+            = render :partial => partial, :locals => { :content => content }
+          - else
+            .alert.alert-error= "Error! No form for #{@content_block.content_type}"
+      #tabs-2.tab-pane
+        = f.input :html_class
+        = f.input :html_id
+        = f.input :custom_css, :as => :text, :input_html => { :cols => 80, :rows => 10, :style => "width: auto; max-width: auto;"}
+      #tabs-3.tab-pane
+        = f.input :shared?, :as => :boolean
+        = f.input :shared_title, :hint => "Note: Changes to shared blocks will be reflected on every page that includes the block."

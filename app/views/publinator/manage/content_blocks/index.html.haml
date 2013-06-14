@@ -11,11 +11,11 @@
 
 .row-fluid
   .span12
-    = render :partial => 'new', :locals => {:content_block => @content_block}
+    -#= render :partial => 'new', :locals => {:content_block => @content_block}
     %br
     = link_to 'Back to Sitemap', sitemap_manage_publications_path
 
-#editContentModal{ :class => "modal hide fade" }
+#editContentModal.modal.hide.fade
   .modal-header
     %h3
       Edit Content
@@ -26,4 +26,13 @@
     %button#updateContentButton{ :class => 'btn btn-primary', 'aria-hidden' => "true" } Update Block
     %button{ :class => 'btn', :data => { :dismiss => 'modal' }, 'aria-hidden' => "true" } Close
 
-
+#addContentModal.modal.hide.fade
+  .modal-header
+    %h3
+      Add Content Block
+      %button{:type => 'button', :class => 'close', :data => { :dismiss => 'modal' }} &times;
+  .modal-body
+    = render :partial => 'new', :locals => {:content_block => @content_block}
+  .modal-footer
+    %button#addContentButton{ :class => 'btn btn-primary', 'aria-hidden' => "true" } Add Block
+    %button{ :class => 'btn', :data => { :dismiss => 'modal' }, 'aria-hidden' => "true" } Close

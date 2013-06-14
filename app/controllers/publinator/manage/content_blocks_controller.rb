@@ -44,17 +44,31 @@ module Publinator
 
     def create
       respond_to do |format|
+        edit = true
         unless @content_block.save
           flash[:error] = 'Content block could not be created'
-        end
-        if @content_block.content_type.present?
-          @content_block.build_content( {} )
+        else
+          if @content_block.content_type.present?
+            unless @content_block.content_id
+              @content_block.build_content( {} )
+            else
+              edit = false
+            end
+          end
         end
         format.js do
-          begin
-            render :text => render_to_string(:partial => 'manage/content_blocks/edit', :locals => {:content_block => @content_block})
-          rescue ActionView::MissingTemplate
-            render :text => render_to_string(:partial => 'publinator/manage/content_blocks/edit', :locals => {:content_block => @content_block})
+          if ( edit )
+            begin
+              render :text => render_to_string(:partial => 'manage/content_blocks/edit', :locals => {:content_block => @content_block})
+            rescue ActionView::MissingTemplate
+              render :text => render_to_string(:partial => 'publinator/manage/content_blocks/edit', :locals => {:content_block => @content_block})
+            end
+          else
+            begin
+              render :text => render_to_string(:partial => 'manage/content_blocks/preview', :locals => {:content_block => @content_block})
+            rescue ActionView::MissingTemplate
+              render :text => render_to_string(:partial => 'publinator/manage/content_blocks/preview', :locals => {:content_block => @content_block})
+            end
           end
         end
       end
@@ -62,9 +76,17 @@ module Publinator
 
     def update
       respond_to do |format|
+        shared = params[:content_block].delete(:shared?)
+        shared_title = params[:content_block].delete(:shared_title)
+
         @content_block.update_attributes(params[:content_block])
+
         unless @content_block.save
           flash[:error] = 'Content block could not be updated.'
+        else
+          if ( shared )
+            @content_block.share( shared_title )
+          end
         end
         format.js do
           begin
@@ -79,10 +101,15 @@ module Publinator
     def destroy
       respond_to do |format|
         @id = @content_block.id
-        if ( @content_block.content.present? )
-          @content_block.content.destroy
+        # FIXME Destroy unless content is shared?
+        #if ( @content_block.content.present? )
+        #  @content_block.content.destroy
+        #end
+        if @content_block.shared? && params[:delete_all]
+          Publinator::ContentBlock.delete_all({:content_type => @content_block.content_type, :content_id => @content_block.content_id})
+        else
+          @content_block.destroy
         end
-        @content_block.destroy
         format.js do
           begin
             render :text => render_to_string(:partial => 'manage/content_blocks/destroy', :locals => {:id => @id})
@@ -109,7 +136,19 @@ module Publinator
 
     def find_or_build_content_block
       blocks = @page.publication.content_blocks
-      @content_block = params[:id] ? blocks.find(params[:id]) : blocks.build(params[:content_block])
+      if params[:id]
+        @content_block = blocks.find(params[:id])
+      elsif params[:content_block]
+        block_params = params[:content_block]
+        type_id = block_params[:content_type].split('|')
+        block_params[:content_type] = type_id[0]
+        if ( type_id.count == 2 )
+          block_params[:content_id] = type_id[1]
+        end
+        @content_block = blocks.build(block_params)
+      else
+        @content_block = blocks.build({})
+      end
     end
 
   end
