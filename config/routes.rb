@@ -110,7 +110,7 @@ Publinator::Engine.routes.draw do
 
   match "/*slug", :controller => :publishable, :action => :page, :as => 'publishable'
 
-  root :to  => "home#index"
-  match '/' => 'home#index'
+  root :to  => "publishable#home"
+  match '/' => "publishable#home"
 
 end

@@ -6,6 +6,14 @@ module Publinator
     #before_filter :find_page, :only => [ :page ]
     before_filter :find_publication, :only => [ :page ]
 
+    def home
+      begin
+        render "home/index"
+      rescue ActionView::MissingTemplate
+        render "publinator/home/index", :layout => current_layout
+      end
+    end
+
     def index
       @publication = Publinator::Publication.find_by_publishable_type_and_slug(params[:publishable_type].classify, 'index')
       @publishable_type = Publinator::PublishableType.find_by_name(params[:publishable_type].classify)

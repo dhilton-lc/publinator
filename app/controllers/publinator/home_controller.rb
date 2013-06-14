@@ -2,6 +2,7 @@ require_dependency "publinator/application_controller"
 
 module Publinator
   class HomeController < Publinator::ApplicationController
+
     def index
       begin
         render "home/index"
